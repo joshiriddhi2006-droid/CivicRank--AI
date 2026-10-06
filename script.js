@@ -1011,48 +1011,116 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==================================================
 
   if (verifyRepairButton) {
-    verifyRepairButton.addEventListener("click", async () => {
-      if (!afterRepairFile) {
+  verifyRepairButton.addEventListener("click", async () => {
+
+    if (!afterRepairFile) {
+      alert("Please upload completion evidence first.");
+      return;
+    }
+
+    verifyRepairButton.disabled = true;
+
+    if (verificationResultStatus) {
+      verificationResultStatus.textContent =
+        "AI verification in progress...";
+    }
+
+    if (verificationMessage) {
+      verificationMessage.textContent =
+        "Comparing before and after evidence...";
+    }
+
+    await delay(800);
+
+    const activeId = Number(
+      localStorage.getItem("civicrank-active-repair")
+    );
+
+    const reports = getReports();
+
+    const report = reports.find(
+      (r) => r.id === activeId
+    );
+
+    if (!report || !report.imageURL) {
+      verificationResultStatus.textContent =
+        "⚠ Verification failed";
+
+      verificationMessage.textContent =
+        "Original evidence could not be found.";
+
+      verifyRepairButton.disabled = false;
+      return;
+    }
+
+    try {
+
+      const comparison = await compareBeforeAfter(
+        report.imageURL,
+        afterRepairFile
+      );
+
+      /* SAME / NEARLY SAME IMAGE */
+      if (comparison.similarity >= 0.97) {
+
+        if (verificationResultStatus) {
+          verificationResultStatus.textContent =
+            "✕ Verification Failed";
+        }
+
+        if (verificationMessage) {
+          verificationMessage.textContent =
+            "The completion image appears to be the same as the original evidence. A genuine repair cannot be verified.";
+        }
+
+        verifyRepairButton.disabled = false;
+
         return;
       }
 
-      verifyRepairButton.disabled = true;
+      /* DIFFERENT IMAGE */
+      report.status = "Resolved";
+      report.verified = true;
+
+      report.completionEvidence =
+        "Before and after evidence were compared and the completion evidence was accepted.";
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(reports)
+      );
 
       if (verificationResultStatus) {
-        verificationResultStatus.textContent = "AI verification in progress...";
-      }
-
-      await delay(1000);
-
-      const activeId = Number(localStorage.getItem("civicrank-active-repair"));
-
-      const reports = getReports();
-
-      const report = reports.find((r) => r.id === activeId);
-
-      if (report) {
-        report.status = "Resolved";
-        report.verified = true;
-        report.completionEvidence =
-          "Completion evidence submitted and verified.";
-      }
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
-
-      if (verificationResultStatus) {
-        verificationResultStatus.textContent = "✓ Repair Verified — Resolved";
+        verificationResultStatus.textContent =
+          "✓ Repair Verified — Resolved";
       }
 
       if (verificationMessage) {
         verificationMessage.textContent =
-          "Completion evidence has been verified. The civic issue is now marked as resolved.";
+          "The before and after evidence are different. The civic issue has been marked as resolved.";
       }
 
-      verifyRepairButton.disabled = false;
-
       updateDashboard();
-    });
-  }
+
+    } catch (error) {
+
+      console.error("Verification error:", error);
+
+      if (verificationResultStatus) {
+        verificationResultStatus.textContent =
+          "⚠ Verification Error";
+      }
+
+      if (verificationMessage) {
+        verificationMessage.textContent =
+          "Unable to compare the evidence. Please upload another completion image.";
+      }
+
+    }
+
+    verifyRepairButton.disabled = false;
+  });
+}
 
   // ==================================================
   // HELPERS
