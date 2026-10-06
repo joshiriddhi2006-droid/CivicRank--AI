@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CivicRank AI | Infrastructure Intelligence</title>
+
+    <meta
+      name="description"
+      content="CivicRank AI detects, validates and prioritizes public infrastructure issues using AI."
+    />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+
+  <body>
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <div class="logo-icon">🏙️</div>
+
+          <div>
+            <div class="logo-text">CivicRank <span>AI</span></div>
+            <div class="logo-subtitle">Infrastructure Intelligence</div>
+          </div>
+        </div>
+
+        <div class="nav-right">
+          <div class="system-status">
+            <span class="status-dot"></span>
+            AI System Online
+          </div>
+
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            aria-label="Toggle theme"
+            type="button"
+          >
+            🌙
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+
+    <header class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>✦</span>
+            AI-POWERED CIVIC INTELLIGENCE
+          </div>
+
+          <h1>
+            Don't just detect the problem.
+            <span>Know what needs action first.</span>
+          </h1>
+
+          <p class="hero-description">
+            CivicRank AI analyzes infrastructure evidence, evaluates risk, and
+            explains which problems deserve attention first.
+          </p>
+
+          <div class="hero-buttons">
+            <button id="startButton" class="primary-button" type="button">
+              <span>🔍</span>
+              Analyze an Issue
+            </button>
+
+            <button id="learnButton" class="secondary-button" type="button">
+              See how it works
+              <span>↓</span>
+            </button>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-item">
+              <strong>AI</strong>
+              <span>Detection</span>
+            </div>
+
+            <div class="trust-line"></div>
+
+            <div class="trust-item">
+              <strong>Risk</strong>
+              <span>Analysis</span>
+            </div>
+
+            <div class="trust-line"></div>
+
+            <div class="trust-item">
+              <strong>Smart</strong>
+              <span>Prioritization</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO VISUAL -->
+
+        <div class="hero-visual">
+          <div class="city-glow"></div>
+
+          <div class="hero-image-card">
+            <img
+              src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=85"
+              alt="Modern city infrastructure"
+            />
+
+            <div class="image-overlay"></div>
+
+            <div class="scan-line"></div>
+
+            <div class="ai-floating-card detection-card">
+              <div class="floating-icon">🤖</div>
+
+              <div>
+                <small>AI DETECTION</small>
+                <strong>Infrastructure issue</strong>
+              </div>
+
+              <div class="mini-check">✓</div>
+            </div>
+
+            <div class="ai-floating-card confidence-card">
+              <div class="confidence-ring">
+                <span>94%</span>
+              </div>
+
+              <div>
+                <small>CONFIDENCE</small>
+                <strong>High confidence</strong>
+              </div>
+            </div>
+
+            <div class="priority-floating-card">
+              <div class="priority-label">
+                <span class="priority-dot"></span>
+                PRIORITY
+              </div>
+
+              <strong>HIGH</strong>
+
+              <div class="priority-mini-bar">
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats-section">
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-icon">👁️</div>
+
+          <div>
+            <strong>Detect</strong>
+            <span>Infrastructure problems</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">✓</div>
+
+          <div>
+            <strong>Validate</strong>
+            <span>Evidence quality</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">⚠️</div>
+
+          <div>
+            <strong>Assess</strong>
+            <span>Safety & public impact</span>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">🎯</div>
+
+          <div>
+            <strong>Prioritize</strong>
+            <span>What needs action first</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+      <!-- ================= ANALYZER ================= -->
+
+      <section id="analyzer" class="analyzer-section">
+        <div class="section-heading">
+          <div class="section-label">
+            <span>01</span>
+            AI EVIDENCE ANALYZER
+          </div>
+
+          <h2>
+            Turn a simple photo into
+            <span>actionable intelligence.</span>
+          </h2>
+
+          <p>
+            Upload an image of a public infrastructure issue and let CivicRank
+            analyze the evidence and calculate its priority.
+          </p>
+        </div>
+
+        <div class="analyzer-layout">
+          <!-- UPLOAD CARD -->
+
+          <div>
+            <div class="upload-card" id="uploadArea">
+              <div class="upload-decoration decoration-one"></div>
+              <div class="upload-decoration decoration-two"></div>
+
+              <div class="upload-icon">📷</div>
+
+              <h3>Upload Infrastructure Evidence</h3>
+
+              <p>Drag & drop an image here or choose one from your device.</p>
+
+              <button id="uploadButton" class="upload-button" type="button">
+                Choose Image
+              </button>
+
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/png,image/jpeg,image/jpg,image/webp"
+                hidden
+              />
+
+              <div id="fileName" class="file-name">No image selected</div>
+
+              <div class="supported-formats">
+                JPG &nbsp;•&nbsp; PNG &nbsp;•&nbsp; JPEG &nbsp;•&nbsp; WEBP
+              </div>
+            </div>
+
+            <!-- ISSUE TYPE -->
+
+            <div class="issue-selector">
+              <label for="issueCategory">
+                What type of civic issue are you reporting?
+              </label>
+
+              <select id="issueCategory">
+                <option value="">Select an issue type</option>
+
+                <option value="Pothole / Road Damage">
+                  Pothole / Road Damage
+                </option>
+
+                <option value="Broken Sidewalk">Broken Sidewalk</option>
+
+                <option value="Damaged Infrastructure">
+                  Damaged Infrastructure
+                </option>
+
+                <option value="Road Obstruction">Road Obstruction</option>
+
+                <option value="Public Safety Issue">Public Safety Issue</option>
+              </select>
+
+              <small>
+                Select the category that best describes the uploaded evidence.
+              </small>
+
+              <!-- ================= LOCATION ================= -->
+
+              <label for="locationInput" style="margin-top: 20px">
+                Where is this issue located?
+              </label>
+
+              <div style="display: flex; gap: 10px; align-items: center">
+                <input
+                  type="text"
+                  id="locationInput"
+                  placeholder="Enter location, e.g. Vijay Nagar, Indore"
+                  style="flex: 1"
+                />
+
+                <button
+                  type="button"
+                  id="useLocationButton"
+                  class="secondary-button"
+                >
+                  📍 Use Location
+                </button>
+              </div>
+
+              <small id="locationStatus">
+                Add the location to improve civic prioritization.
+              </small>
+            </div>
+          </div>
+
+          <!-- LIVE PREVIEW -->
+
+          <div class="preview-card">
+            <div class="preview-header">
+              <div>
+                <span class="preview-label"> LIVE PREVIEW </span>
+
+                <h3>Evidence Canvas</h3>
+              </div>
+
+              <span class="preview-status"> ● READY </span>
+            </div>
+
+            <div id="imagePreview" class="image-preview">
+              <div class="preview-placeholder">
+                <div class="preview-placeholder-icon">🖼️</div>
+
+                <strong> Your evidence will appear here </strong>
+
+                <span> Upload an infrastructure image to begin analysis </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANALYZE ACTION -->
+
+        <div class="analyze-action">
+          <button
+            id="analyzeButton"
+            class="primary-button analyze-button"
+            disabled
+            type="button"
+          >
+            <span>✦</span>
+            Analyze with CivicRank AI
+          </button>
+
+          <div id="analysisStatus" class="analysis-status">
+            AI engine waiting for evidence
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RESULT ================= -->
+
+      <section id="resultSection" class="result-section" hidden>
+        <div class="section-heading result-heading">
+          <div class="section-label">
+            <span>02</span>
+            AI ANALYSIS COMPLETE
+          </div>
+
+          <h2>
+            Here's what CivicRank
+            <span>found.</span>
+          </h2>
+        </div>
+
+        <div class="result-grid">
+          <!-- ISSUE DETECTION -->
+
+          <div class="result-card issue-card">
+            <div class="result-card-top">
+              <div class="result-icon">🔎</div>
+
+              <span class="result-tag success-tag"> DETECTED </span>
+            </div>
+
+            <span class="result-label"> ISSUE TYPE </span>
+
+            <h3 id="issueType">Road Damage</h3>
+
+            <div class="confidence-section">
+              <div class="confidence-header">
+                <span> AI Confidence </span>
+
+                <strong id="confidenceValue"> 94% </strong>
+              </div>
+
+              <div class="progress-track">
+                <div
+                  id="confidenceBar"
+                  class="progress-fill"
+                  style="width: 94%"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EVIDENCE QUALITY -->
+
+          <div class="result-card">
+            <div class="result-card-top">
+              <div class="result-icon blue-icon">🛡️</div>
+
+              <span class="result-tag"> VALIDATION </span>
+            </div>
+
+            <span class="result-label"> EVIDENCE QUALITY </span>
+
+            <h3 id="evidenceQuality">Good Evidence</h3>
+
+            <p id="evidenceMessage">
+              The image provides enough visual information for reliable
+              analysis.
+            </p>
+          </div>
+
+          <!-- PRIORITY SCORE -->
+
+          <div class="result-card priority-card">
+            <div class="result-card-top">
+              <div class="result-icon orange-icon">🎯</div>
+
+              <span class="result-tag warning-tag"> ACTION </span>
+            </div>
+
+            <span class="result-label"> PRIORITY SCORE </span>
+
+            <div class="priority-score-wrap">
+              <div class="priority-score-circle">
+                <strong id="priorityScore"> 89 </strong>
+
+                <span>/100</span>
+              </div>
+
+              <div class="priority-info">
+                <strong id="priorityLevel"> HIGH PRIORITY </strong>
+
+                <span> Needs attention </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACTORS -->
+
+        <div class="explanation-card">
+          <div class="explanation-header">
+            <div>
+              <span class="result-label"> WHY THIS SCORE? </span>
+
+              <h3>Explainable Priority</h3>
+            </div>
+
+            <div class="explanation-ai">✦ AI Reasoning</div>
+          </div>
+
+          <div id="factorGrid" class="factor-grid">
+            <div class="factor-item">
+              <span>Severity</span>
+              <strong>High</strong>
+            </div>
+
+            <div class="factor-item">
+              <span>Safety Risk</span>
+              <strong>High</strong>
+            </div>
+
+            <div class="factor-item">
+              <span>Public Impact</span>
+              <strong>Medium</strong>
+            </div>
+
+            <div class="factor-item">
+              <span>Evidence Quality</span>
+              <strong>Good</strong>
+            </div>
+          </div>
+
+          <div id="priorityReason" class="priority-reason">
+            <span>💡</span>
+
+            <p>
+              This issue received a high priority because the detected damage
+              presents a significant safety risk and may affect multiple road
+              users.
+            </p>
+          </div>
+        </div>
+
+        <!-- RESULT VERIFICATION INFO -->
+
+        <div class="verification-card">
+          <div class="verification-visual">
+            <div class="verification-ring">✓</div>
+          </div>
+
+          <div class="verification-content">
+            <span class="result-label"> NEXT STEP </span>
+
+            <h3>Resolution Verification</h3>
+
+            <p>
+              CivicRank can compare future evidence with the original report to
+              help verify whether the issue has actually been resolved.
+            </p>
+
+            <div id="verificationStatus" class="verification-status">
+              <span></span>
+              Ready for future verification
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DASHBOARD ================= -->
+
+      <section class="dashboard-section" id="dashboardSection">
+        <div class="section-heading">
+          <span class="section-label"> LIVE CIVIC INTELLIGENCE </span>
+
+          <h2>Issue Dashboard</h2>
+
+          <p>
+            See reported issues, priority levels and recurring problems in one
+            place.
+          </p>
+        </div>
+
+        <div class="dashboard-stats">
+          <div class="dashboard-stat">
+            <span>Total Reports</span>
+            <strong id="totalReports">0</strong>
+          </div>
+
+          <div class="dashboard-stat">
+            <span>Critical / High</span>
+            <strong id="criticalReports">0</strong>
+          </div>
+
+          <div class="dashboard-stat">
+            <span>Recurring Issues</span>
+            <strong id="recurringReports">0</strong>
+          </div>
+
+          <div class="dashboard-stat">
+            <span>Average Priority</span>
+            <strong id="averagePriority">0</strong>
+          </div>
+        </div>
+
+        <div class="dashboard-layout">
+          <!-- MAP -->
+
+          <div class="dashboard-map-card">
+            <div class="dashboard-card-header">
+              <div>
+                <span class="section-label"> LOCATION INTELLIGENCE </span>
+
+                <h3>Reported Issues</h3>
+              </div>
+
+              <select id="dashboardFilter">
+                <option value="all">All Issues</option>
+
+                <option value="high">High Priority</option>
+
+                <option value="recurring">Recurring</option>
+              </select>
+            </div>
+
+            <div id="issueMap" class="issue-map"></div>
+          </div>
+
+          <!-- REPORT LIST -->
+
+          <div class="dashboard-list-card">
+            <div class="dashboard-card-header">
+              <div>
+                <span class="section-label"> RECENT ACTIVITY </span>
+
+                <h3>Priority Queue</h3>
+              </div>
+            </div>
+
+            <div id="reportList" class="report-list">
+              <div class="empty-dashboard">
+                No reports yet. Analyze an issue above to create the first
+                report.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RESOLUTION VERIFICATION ================= -->
+
+      <section class="verification-section" id="resolutionVerification">
+        <div class="section-heading">
+          <span class="section-label"> CLOSE THE LOOP </span>
+
+          <h2>Was the problem actually fixed?</h2>
+
+          <p>
+            Upload an after-repair photo and compare it with the original
+            evidence before marking the issue as resolved.
+          </p>
+        </div>
+
+        <div class="verification-layout">
+          <!-- ORIGINAL -->
+
+          <div class="verification-upload-card">
+            <div class="verification-header">
+              <span class="verification-number"> 01 </span>
+
+              <div>
+                <h3>Original Evidence</h3>
+
+                <p>The reported issue</p>
+              </div>
+            </div>
+
+            <div class="verification-preview" id="beforePreview">
+              <span> Original report image </span>
+            </div>
+          </div>
+
+          <div class="verification-arrow">→</div>
+
+          <!-- AFTER REPAIR -->
+
+          <div class="verification-upload-card">
+            <div class="verification-header">
+              <span class="verification-number"> 02 </span>
+
+              <div>
+                <h3>After Repair</h3>
+
+                <p>Upload new evidence</p>
+              </div>
+            </div>
+
+            <div
+              class="verification-preview verification-drop"
+              id="afterPreview"
+            >
+              <span> Upload after-repair photo </span>
+
+              <input
+                type="file"
+                id="afterRepairInput"
+                accept="image/*"
+                hidden
+              />
+
+              <button
+                type="button"
+                class="secondary-button"
+                id="afterRepairButton"
+              >
+                Choose Photo
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- VERIFICATION RESULT -->
+
+        <div
+          class="verification-result"
+          id="verificationResult"
+          style="display: none"
+        >
+          <div class="verification-result-label">AI VERIFICATION</div>
+
+          <div class="verification-status" id="verificationResultStatus">—</div>
+
+          <p id="verificationMessage">
+            Upload an after-repair image to begin verification.
+          </p>
+
+          <button
+            type="button"
+            class="primary-button"
+            id="verifyRepairButton"
+            disabled
+          >
+            Verify Repair
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= EXAMPLES ================= -->
+
+      <section class="examples-section">
+        <div class="section-heading">
+          <div class="section-label">
+            <span>03</span>
+
+            WHAT CIVICRANK CAN UNDERSTAND
+          </div>
+
+          <h2>
+            From everyday problems to
+
+            <span> smart decisions. </span>
+          </h2>
+        </div>
+
+        <div class="examples-grid">
+          <div class="example-card">
+            <div class="example-image">
+              <img
+                src="https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=800&q=80"
+                alt="Damaged road"
+              />
+
+              <span class="example-badge"> ROAD DAMAGE </span>
+            </div>
+
+            <div class="example-content">
+              <h3>Road & Pothole Damage</h3>
+
+              <p>
+                Identify visible road damage and evaluate potential safety
+                impact.
+              </p>
+            </div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-image">
+              <img
+                src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80"
+                alt="Urban infrastructure"
+              />
+
+              <span class="example-badge"> INFRASTRUCTURE </span>
+            </div>
+
+            <div class="example-content">
+              <h3>Public Infrastructure</h3>
+
+              <p>
+                Analyze visible infrastructure problems that may affect public
+                spaces.
+              </p>
+            </div>
+          </div>
+
+          <div class="example-card">
+            <div class="example-image">
+              <img
+                src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800&q=80"
+                alt="City street"
+              />
+
+              <span class="example-badge"> CIVIC ISSUE </span>
+            </div>
+
+            <div class="example-content">
+              <h3>Urban Safety Issues</h3>
+
+              <p>
+                Turn visual evidence into an understandable risk and action
+                priority.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= WORKFLOW ================= -->
+
+      <section id="howItWorks" class="workflow-section">
+        <div class="section-heading">
+          <div class="section-label">
+            <span>04</span>
+
+            HOW IT WORKS
+          </div>
+
+          <h2>
+            Four steps from
+
+            <span> photo to priority. </span>
+          </h2>
+        </div>
+
+        <div class="workflow">
+          <div class="workflow-line"></div>
+
+          <div class="workflow-card">
+            <div class="workflow-number">01</div>
+
+            <div class="workflow-icon">📸</div>
+
+            <h3>Capture</h3>
+
+            <p>Upload visual evidence of an infrastructure issue.</p>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-number">02</div>
+
+            <div class="workflow-icon">👁️</div>
+
+            <h3>Detect</h3>
+
+            <p>AI analyzes the image and identifies the issue.</p>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-number">03</div>
+
+            <div class="workflow-icon">🛡️</div>
+
+            <h3>Validate</h3>
+
+            <p>Evidence quality and confidence are evaluated.</p>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-number">04</div>
+
+            <div class="workflow-icon">🎯</div>
+
+            <h3>Prioritize</h3>
+
+            <p>Explainable risk factors determine what needs action first.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DIFFERENT ================= -->
+
+      <section class="difference-section">
+        <div class="section-heading">
+          <div class="section-label">
+            <span>05</span>
+
+            WHY CIVICRANK
+          </div>
+
+          <h2>
+            More than detection.
+
+            <span> Decision intelligence. </span>
+          </h2>
+
+          <p>
+            Most systems stop after identifying a problem. CivicRank focuses on
+            what happens next.
+          </p>
+        </div>
+
+        <div class="difference-grid">
+          <div class="difference-card">
+            <div class="difference-icon">🛡️</div>
+
+            <h3>Evidence Quality</h3>
+
+            <p>
+              Check whether the uploaded evidence is actually useful before
+              trusting the result.
+            </p>
+          </div>
+
+          <div class="difference-card featured-difference">
+            <div class="difference-icon">🎯</div>
+
+            <h3>Explainable Priority</h3>
+
+            <p>
+              Don't just show a score. Explain why an issue deserves urgent
+              attention.
+            </p>
+
+            <span class="featured-label"> KEY DIFFERENTIATOR </span>
+          </div>
+
+          <div class="difference-card">
+            <div class="difference-icon">🔄</div>
+
+            <h3>Recurring Problems</h3>
+
+            <p>
+              Track repeated issues and identify infrastructure problems that
+              keep coming back.
+            </p>
+          </div>
+
+          <div class="difference-card">
+            <div class="difference-icon">✓</div>
+
+            <h3>Resolution Verification</h3>
+
+            <p>
+              Compare future evidence with the original report to help verify
+              resolution.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FINAL CTA ================= -->
+
+      <section class="final-cta">
+        <div class="cta-glow"></div>
+
+        <div class="cta-content">
+          <div class="cta-icon">🏙️</div>
+
+          <span class="section-label"> BUILDING SMARTER CITIES </span>
+
+          <h2>
+            Don't just report problems.
+
+            <span> Prioritize them. </span>
+          </h2>
+
+          <p>
+            CivicRank AI turns infrastructure evidence into clear, explainable
+            action.
+          </p>
+
+          <button class="primary-button" id="finalStartButton" type="button">
+            Start Analyzing
+            <span>→</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon">🏙️</div>
+
+            <div>
+              <div class="logo-text">CivicRank <span>AI</span></div>
+
+              <div class="logo-subtitle">Infrastructure Intelligence</div>
+            </div>
+          </div>
+
+          <p>Detect. Validate. Prioritize.</p>
+        </div>
+
+        <div class="footer-right">
+          <span> Built for smarter civic infrastructure </span>
+
+          <span class="footer-dot"> • </span>
+
+          <span> Hackathon Prototype </span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- CivicRank JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
